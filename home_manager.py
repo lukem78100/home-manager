@@ -23,4 +23,14 @@ def __init__():
     app.config.from_object(BaseConfig())
     db.init_app(app)
 
+    with app.app_context():
+        # Register db models
+        import camera, thermostat
+
+        db.create_all()
+
+        # Register blueprints
+        app.register_blueprint(camera.camera)
+        app.register_blueprint(thermostat.thermostat)
+
 __init__()
